@@ -1,10 +1,10 @@
-function res = copyMakeBorder(data, Rows, Cols)
+function res = copyMakeBorder(data, Cols, Rows)
 %扩充图像边界 超过图像区域补零
-%	M = copyMakeBorder(A, R, C) 将图像边界扩充
+%	M = copyMakeBorder(A, W, H) 将图像边界扩充
 %   
 %   A - 待处理矩阵
-%   R - 扩充行数
-%   C - 扩充列数
+%   W - 横向分辨率
+%   H - 纵向分辨率
 %
 %   M - 返回的扩充矩阵
 %
