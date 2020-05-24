@@ -5,3 +5,4 @@ close all;
 
 path = pwd;
 addpath(pwd);
+addpath([pwd '\image']);

@@ -5,12 +5,6 @@ function varargout = stepPhase(data, step_n)
 %   [Phase, Index, Table] =  返回[0 2*pi]相位值  索引值  分阶表
 %   P 是M×N相位矩阵，取值范围(0, 2*pi)
 %
-%   Author Information
-%   -----------------------
-%   Author : rlxu
-%   Update Date : 2019-10-12
-%
-%   Copyright 2019 Key Laboratory of ICSP Anhui University
 
 [M, N] = size(data);
 Index = zeros(M, N);

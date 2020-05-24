@@ -1,6 +1,6 @@
 function res = expandMAT(data, R_multiple, C_multiple, ex_style)
 %矩阵扩展
-%   expandMAT(A, RM, CM, ex_style) 对矩阵A进行行向和列向扩展
+%   M = expandMAT(A, RM, CM, ex_style) 对矩阵A进行行向和列向扩展
 %
 %   A  - R×C的矩阵
 %   RM - 行向扩展倍数
@@ -11,12 +11,7 @@ function res = expandMAT(data, R_multiple, C_multiple, ex_style)
 %
 %   M - 返回的扩展矩阵
 %
-%   Author Information
-%   -----------------------
-%   Author : rlxu
-%   Update Date : 2019-10-25
-%
-%   Copyright 2019 Key Laboratory of ICSP Anhui University
+
 [R, C] = size(data);
 switch ex_style
     case 'pixel'

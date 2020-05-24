@@ -1,0 +1,170 @@
+###############################################################################
+# Author: rlxu
+# Update Date: 2019-01-04
+# Copyright 2019 Anhui University, Key Laboratory of Intelligent Computing and Signal Processing, Ministry of Education
+###############################################################################
+deleteall;
+clear;
+
+# Marco
+m  = 1e-0;
+mm = 1e-3;
+um = 1e-6;
+nm = 1e-9;
+pm = 1e-12;
+fm = 1e-15;
+
+s  = 1;
+ms = 1e-3;
+us = 1e-6;
+ns = 1e-9;
+ps = 1e-12;
+fs = 1e-15;
+
+lambda_red   = 655*nm;
+lambda_green = 532*nm;
+lambda_blue  = 473*nm;
+
+
+# Parameter
+Unit_Width   = 260*nm;
+Unit_Length  = 260*nm;
+Ant_Width    = 100*nm;
+Ant_Length   = 200*nm;
+SiO2_Thick   =  50*nm;
+AuBase_Thick = 300*nm;
+Ant_Thick    =  30*nm;
+lambda       = 800*nm;
+mesh         =  30*nm;
+
+Table = [20, 75, 100, 150];
+
+# Main Code
+NAME = "test";
+INPATH = "";
+OUTPATH = "";
+Data_raw = readdata(INPATH+NAME+".dat");
+N_x = Data_raw(1, 1);
+N_y = Data_raw(1, 2);
+
+Base_Width  = Unit_Width  * N_x;
+Base_Length = Unit_Length * N_y;
+
+Base_Pos_x = Base_Width  / 2;
+Base_Pos_y = Base_Length / 2;
+
+# addgridattribute("permittivity rotation");   # 添加坐标
+
+addrect;
+#set("render type","wireframe");
+set("name", "SiO2");
+set("x", Base_Pos_x);
+set("x span", Base_Width);
+set("y", Base_Pos_y);
+set("y span", Base_Length);
+set("z", -((SiO2_Thick+Ant_Thick) / 2));
+set("z span", SiO2_Thick);
+set("material", "SiO2 (Glass) - Palik");
+
+addrect;
+#set("render type","wireframe");
+set("name", "AuBase");
+set("x", Base_Pos_x);
+set("x span", Base_Width);
+set("y", Base_Pos_y);
+set("y span", Base_Length);
+set("z", -((Ant_Thick+AuBase_Thick) / 2 + SiO2_Thick));
+set("z span", AuBase_Thick);
+set("material", "Au (Gold) - CRC");
+
+Data = Data_raw(2:end, 1:2);
+Pos_x = Unit_Width / 2;
+Pos_y = Unit_Length / 2;
+
+addstructuregroup;
+set("name","Ant_Group");
+for(y = 1 : 1 : N_y)
+{
+     for(x = 1 : 1 : N_x)
+     {
+          addrect;
+          # set("render type","wireframe");
+          set("x", Pos_x);
+          set("y", Pos_y);
+          set("z", 0);
+          set("y span", Ant_Length);
+          set("z span", Ant_Thick);
+          set("material", "Au (Gold) - CRC");
+          ant_name = "Ant[" + num2str(x) + "x" + num2str(y) + "]";
+          set("name", ant_name);
+          Ant_Width = Table(Data((y-1)*N_x + x, 2));
+          set("x span", Ant_Width*nm);
+          addtogroup("Ant_Group");
+          ?"( " + num2str((y-1)*N_x + x) + " of " + num2str(N_x * N_y) + " )"; #Show progress
+          Pos_x = Pos_x + Unit_Width;
+     }
+     Pos_y = Pos_y + Unit_Length;
+     Pos_x = Unit_Width / 2;
+}
+
+addtfsf;
+set("name", "source_X");
+set("injection axis","z");
+set("direction", "Backward");
+set("x",Unit_Width  * N_x / 2);
+set("x span",Base_Width*2);
+set("y",Unit_Length * N_y / 2);
+set("y span",Base_Length*2);
+set("z min", getnamed("AuBase", "z min"));
+set("z max", getnamed("AuBase", "z max") + 0.6*lambda);
+set("wavelength start", lambda);
+set("wavelength stop", lambda);
+set("amplitude", 1);
+set("polarization angle", 0);
+set("phase", 0);
+
+addprofile;
+set("name","field_profile_monitor");
+set("monitor type",7);  # 1 = point, 2 = linear x, 3 = linear y, 4 = linear z, 5 = 2D x-normal, 6 = 2D y-normal, 7 = 2D z-normal, 8 = 3D
+set("x",Unit_Width  * N_x / 2);
+set("x span",Base_Width*4);
+set("y",Unit_Length * N_y / 2);
+set("y span",Base_Length*4);
+set("z", getnamed("source_X", "z max") + 100*nm);
+
+#
+FDTD_Layers = 24;
+FDTD_Pos_x  = Unit_Length * N_x / 2;
+FDTD_Pos_y  = Unit_Length * N_y / 2;
+FDTD_Pos_z  = 0;
+FDTD_Span_x = Base_Width;# + 1.2*lambda;
+FDTD_Span_y = Base_Length;# + 1.2*lambda;
+FDTD_max_z  = getnamed("source_X", "z max") + 150*nm;
+FDTD_min_z  = getnamed("AuBase", "z min") + 200*nm;
+#
+
+addfdtd;
+set("dimension",2);  #  1 = 2D, 2 = 3D
+set("x", FDTD_Pos_x);
+set("x span", FDTD_Span_x);
+set("y", FDTD_Pos_y);
+set("y span", FDTD_Span_y);
+set("z",FDTD_Pos_z);
+set("z max", FDTD_max_z);
+set("z min", FDTD_min_z);
+set("auto shutoff min", 1e-5);
+set("pml layers", 24);
+set("simulation time", 2000*fs);
+set("x max bc", "Periodic");
+set("x min bc", "Periodic");
+set("y max bc", "Periodic");
+set("y min bc", "Periodic");
+
+save(OUTPATH+NAME+".lsp");
+
+?"[BUILD COMPLETE]";
+
+#run;
+
+#?"[RUN COMPLETE]";
+

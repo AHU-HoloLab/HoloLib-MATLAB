@@ -18,12 +18,6 @@ function res_angle = getBlaze(varargin)
 %
 %   P - 返回的相位分布矩阵
 %
-%   Author Information
-%   -----------------------
-%   Author : rlxu
-%   Update Date : 2019-10-25
-%
-%   Copyright 2019 Key Laboratory of ICSP Anhui University
 
 if nargin > 0
     [varargin{:}] = convertStringsToChars(varargin{:});
@@ -44,9 +38,9 @@ switch ori
     otherwise,       x_axis =  0; y_axis =  0;
 end
 fi = zeros(Rows, Cols);
-for r=1:Rows
-    for c=1:Cols
-        fi(r,c)=mod(x_axis*r+y_axis*c,T)*2*pi/T;%得到闪耀光栅的表达式
+for r=0:Rows-1
+    for c=0:Cols-1
+        fi(r+1,c+1)=(rem(x_axis*r+y_axis*c,T)+1)*2*pi/T ;%得到闪耀光栅的表达式
     end
 end
 res_angle = mod(fi,2*pi);
@@ -77,8 +71,8 @@ if (nargin == 3)
 end
 
 if (nargin == 4)
-    R = varargin{1};
-    C = varargin{2};
+    Rows = varargin{1};
+    Cols = varargin{2};
     T = varargin{3};
     ori = varargin{4};
 end

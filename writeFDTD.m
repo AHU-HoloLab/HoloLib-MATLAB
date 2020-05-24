@@ -6,12 +6,6 @@ function writeFDTD(data, FILENAME)
 %   data 是stepPhase函数生成的Index索引数据矩阵
 %   FILENAME 是输出文件全名 应包含路径和文件名
 %
-%   Author Information
-%   -----------------------
-%   Author : rlxu
-%   Update Date : 2019-10-25
-%
-%   Copyright 2019 Key Laboratory of ICSP Anhui University
 
 if isa(data, 'uint8') == false
     error('不是索引矩阵');
@@ -33,7 +27,7 @@ for r = R:-1:1
 end
 fclose(fid);
 % 将数据移动到指定位
-movefile([getenv('TMP') '\' tmpName '.tmp'], FILENAME) 
+movefile([getenv('TMP') '\' tmpName '.tmp'], [FILENAME '.dat']); 
 
 end
 

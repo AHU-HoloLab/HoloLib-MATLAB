@@ -1,18 +1,13 @@
 function res = repImage(data, width, height)
 %图像重复拼接
-%   M = repImage(A, width, height)
+%   M = repImage(A, W, H)
 %   A - 拼接矩阵
-%   width - 宽度
-%   height - 高度
+%   Pw - 宽度分辨率
+%   Ph - 高度分辨率
 %
-%   M - 输出width × height分辨率图像
+%   M - 输出 Pw×Ph 分辨率图像
 %
-%   Author Information
-%   -----------------------
-%   Author : rlxu
-%   Update Date : 2019-10-15
-%
-%   Copyright 2019 Key Laboratory of ICSP Anhui University
+
 [R, C] = size(data);
 if R > height || C > width
     error('图片过大'); 

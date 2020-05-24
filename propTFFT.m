@@ -1,20 +1,14 @@
 function U = propTFFT(data, width_Length, height_Length, lambda, z)
 %propagation - T-FFT approach(propTFFT) 菲涅尔传播-三次傅里叶计算法方法
-%   U = propTFFT(A, LW, LH, lambda, z) 对衍射平面A进行菲涅尔传播，返回观察平面复振幅分布
+%   U = propTFFT(A, Lw, Lh, lambda, z) 对衍射平面A进行菲涅尔传播，返回观察平面复振幅分布
 %   A  - M×N的衍射平面矩阵
-%   LW - 图像宽度，单位：米
-%   LH - 图像高度，单位：米
+%   Lw - 图像宽度，单位：米
+%   Lh - 图像高度，单位：米
 %   lambda - 入射光波长，单位：米
 %   z - 衍射平面到观察平面距离，单位：米
 % 
 %   U - 返回平面复振幅分布
 %
-%   Author Information
-%   -----------------------
-%   Author : rlxu
-%   Update Date : 2019-10-15
-%
-%   Copyright 2019 Key Laboratory of ICSP Anhui University
 
 [height_Pixel, width_Pixel] = size(data);
 x = linspace(-width_Length/2, width_Length/2, width_Pixel);

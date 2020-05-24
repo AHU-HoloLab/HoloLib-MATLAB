@@ -9,7 +9,7 @@ nm = 1e-9;
 
 % 输入路径
 IMG_Path = '';
-IMG_Name = 'F128';
+IMG_Name = 'F16';
 IMG_Type = '.BMP';
 
 % 输出路径
@@ -36,10 +36,11 @@ T = M;
 I = fftshift(IMG);
 H = iterFourier(I, Niter);
 H = expandMAT(H, M, M, 'pixel');
-B = getBlaze(size(H), T, 'up');
+B = getBlaze(size(H), T, 'up'); % 叠加向上闪耀光栅
 P = mod(B+H, 2*pi);
 A = recFourier(P);
 A = ifftshift(A);
 imshow(A);
 [~, D] = stepPhase(P, NStep);
 writeFDTD(D, [Data_Path Data_Name Data_Type]);
+% 之后在FDTD Solutions中运行FDTD_Build.lsf

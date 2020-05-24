@@ -1,10 +1,10 @@
 function showLCOS(varargin)
 %将相位图显示指定屏幕上
-% 注意: 先将显示器配置好,再打开MATLAB
+% 注意: 先将显示器配置好,再打开MATLAB, 仅支持MATLAB R2018b及以上
 %	showLCOS(P, ID) 将相位矩阵，显示在指定显示器上
 %   
 %   P - 相位矩阵
-%   MonitorID - 显示器ID号
+%   MonitorID - 显示器ID号 eg:2
 %   disp_style - 显示方式
 %       - single 相位图不做重复，对其周围补零，像素利用率低
 %       - multiple 相位图重复，铺满全屏幕，像素利用率高
@@ -12,12 +12,6 @@ function showLCOS(varargin)
 %   MATLAB与Windows API屏幕坐标系不同
 %   MATLAB坐标系原点为左下角，开始坐标(1, 1)
 %
-%   Author Information
-%   -----------------------
-%   Author : rlxu
-%   Update Date : 2019-10-26
-%
-%   Copyright 2019 Key Laboratory of ICSP Anhui University
 
 if nargin > 0
     [varargin{:}] = convertStringsToChars(varargin{:});
@@ -40,11 +34,11 @@ switch disp_style
 end
 
 fig = showPhase(data, 'LCOS', 'tight');
+fig.Position = [left bottom width height];
 fig.WindowState = 'fullscreen';   
 fig.MenuBar = 'none';
 fig.Color = 'k';
 fig.ToolBar = 'none';
-fig.Position = [left bottom width height];
 end
 
 % Function parse_inputs

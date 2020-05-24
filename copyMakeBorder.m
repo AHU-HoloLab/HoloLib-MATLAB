@@ -8,12 +8,6 @@ function res = copyMakeBorder(data, Rows, Cols)
 %
 %   M - ·µ»ØµÄÀ©³ä¾ØÕó
 %
-%   Author Information
-%   -----------------------
-%   Author : rlxu
-%   Update Date : 2019-10-26
-%
-%   Copyright 2019 Key Laboratory of ICSP Anhui University
 
 [R, C, D] = size(data);
 if R > Rows || C > Cols
