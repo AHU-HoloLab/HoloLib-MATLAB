@@ -13,10 +13,8 @@ function res = copyMakeBorder(data, Rows, Cols)
 if R > Rows || C > Cols
    error('Í¼Æ¬¹ý´ó'); 
 end
-if R == Rows && C == Cols
-    res = data;
-end
-if R < Rows && C < Cols
+
+if R <= Rows || C <= Cols
     res = zeros(Rows, Cols, D);
     Pos_r1 = round(Rows/2 - R/2)+1;
     Pos_c1 = round(Cols/2 - C/2)+1;
