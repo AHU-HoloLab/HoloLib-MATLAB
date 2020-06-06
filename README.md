@@ -33,7 +33,8 @@ showPhase.m             % 相位显示
 stepPhase.m             % 相位分阶函数
 writeFDTD.m             % FDTD Solutions 仿真文件数据导出
 ```
-./Sample 存放功能示例代码
+`使用范例`  存放代码使用例子
+`image`    存放测试图像
 
 ## 部署步骤
 - 将 `HoloLib_MATLAB\source` 文件夹添加到MATLAB搜索路径
