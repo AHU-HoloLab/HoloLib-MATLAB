@@ -1,4 +1,4 @@
-function U = propDFFT(data, width_Length, height_Length, lambda, z)
+function U = propDFFT(data, Lw, Lh, lambda, z)
 %propagation - D-FFT approach(propDFFT) 菲涅尔传播-两次傅里叶计算法方法
 %   U = propDFFT(A, Lw, Lh, lambda, z) 对衍射平面A进行菲涅尔传播，返回观察平面复振幅分布
 %   A  - M×N的衍射平面矩阵
@@ -12,8 +12,8 @@ function U = propDFFT(data, width_Length, height_Length, lambda, z)
 
 [height_Pixel, width_Pixel] = size(data);
 k = 2*pi / lambda;
-kethi = linspace(-1./2./width_Length, 1./2./width_Length, width_Pixel).* width_Pixel;
-nenta = linspace(-1./2./height_Length, 1./2./height_Length, height_Pixel).* height_Pixel;
+kethi = linspace(-1./2./Lw, 1./2./Lw, width_Pixel).* width_Pixel;
+nenta = linspace(-1./2./Lh, 1./2./Lh, height_Pixel).* height_Pixel;
 [kethi, nenta] = meshgrid(kethi, nenta);
 phi = k*z .* (1-lambda.^2.*(kethi.^2 + nenta.^2)./2);
 H = exp(1j*phi);

@@ -40,12 +40,12 @@ showPhase(H, '傅里叶纯相位全息图');
 
 
 f = 0.3*m;
-% L = getLens(f, Lw, Lh, C, R, lambda);
-L = getLens(0.3, 5e-3, 5e-3, 5, 5, 532e-9);
+L = getLens(f, Lw, Lh, C, R, lambda);
+% L = getLens(0.3, 5e-3, 5e-3, 512, 512, 532e-9);
 showPhase(L, '菲涅尔透镜相位图');
 P = mod(H+L, 2*pi);
 figure('name', '重构图像', 'NumberTitle', 'off');
-U = propDOE(P, f, Lw, Lh, C, R, lambda);
+U = propDOE(L, f+50*mm, Lw, Lh, C, R, lambda);
 A = mat2gray(abs(U));
 imshow(A);
 % hold on;

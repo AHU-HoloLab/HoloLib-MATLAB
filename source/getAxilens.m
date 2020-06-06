@@ -4,7 +4,7 @@ function res_angle = getAxilens(varargin)
 %   P = getAxilens(f, Zg, WL, HL, WP, HP，lambda, R) 生成轴锥透镜的相位分布，增加透镜半径参数
 %
 %   f - f 和 Zg 标定了轴锥体的焦距的范围，在 f0到 f0+Zg之间
-%   Zg - 焦深
+%   Zg - 焦深，单位：米
 %   Lw  - 透镜宽度，单位：米
 %   Lh - 透镜高度，单位：米
 %   Pw   - 透镜宽度像素数
@@ -13,6 +13,8 @@ function res_angle = getAxilens(varargin)
 %   R - 轴锥体半径
 %
 %   P - 返回的相位分布矩阵
+%
+%   注意: 本函数仅适用于大焦比F#情况，当焦距与直径在同一数量级时无效
 %
 
 if nargin > 0

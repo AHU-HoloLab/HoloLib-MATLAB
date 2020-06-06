@@ -1,4 +1,4 @@
-function U = propTFFT(data, width_Length, height_Length, lambda, z)
+function U = propTFFT(data, Lw, Lh, lambda, z)
 %propagation - T-FFT approach(propTFFT) 菲涅尔传播-三次傅里叶计算法方法
 %   U = propTFFT(A, Lw, Lh, lambda, z) 对衍射平面A进行菲涅尔传播，返回观察平面复振幅分布
 %   A  - M×N的衍射平面矩阵
@@ -11,8 +11,8 @@ function U = propTFFT(data, width_Length, height_Length, lambda, z)
 %
 
 [height_Pixel, width_Pixel] = size(data);
-x = linspace(-width_Length/2, width_Length/2, width_Pixel);
-y = linspace(-height_Length/2, height_Length/2, height_Pixel);
+x = linspace(-Lw/2, Lw/2, width_Pixel);
+y = linspace(-Lh/2, Lh/2, height_Pixel);
 k = 2*pi / lambda;
 [X, Y] = meshgrid(x, y); 
 F0 = exp(1j*k*z) / (1j*lambda*z);
