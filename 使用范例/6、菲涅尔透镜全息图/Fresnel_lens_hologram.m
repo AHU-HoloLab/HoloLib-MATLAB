@@ -39,29 +39,44 @@ H = iterFourier(IMG, Niter);
 showPhase(H, '傅里叶纯相位全息图');
 
 
-f = 0.3*m;
+f = 0.9*m;
 L = getLens(f, Lw, Lh, C, R, lambda);
-% L = getLens(0.3, 5e-3, 5e-3, 512, 512, 532e-9);
 showPhase(L, '菲涅尔透镜相位图');
 P = mod(H+L, 2*pi);
-figure('name', '重构图像', 'NumberTitle', 'off');
+figure('name', '球面相位透镜重构', 'NumberTitle', 'off');
 U = propDOE(L, f+50*mm, Lw, Lh, C, R, lambda);
 A = mat2gray(abs(U));
 imshow(A);
-% hold on;
-% 
-% z = 0.3*m : 0.02*m : 0.7*m;
-% Cs = 8;
-% Rs = round(size(z,2)/Cs)+1;
-% for i = 1:1:size(z, 2)
-%     U = propDOE(P, z(i), Lw, Lh, C, R, lambda);
-%     A = mat2gray(abs(U));
-%     subplot(Rs, Cs, i); 
-%     imshow(A);
-%     title(sprintf('z=%0.2fm', z(i)));
-% end
-% hold off;
+hold on;
 
+z = f-0.2*m : 0.05*m : f+0.5*m;
+Cs = 8;
+Rs = round(size(z,2)/Cs)+1;
+for i = 1:1:size(z, 2)
+    U = propDOE(P, z(i), Lw, Lh, C, R, lambda);
+    A = mat2gray(abs(U));
+    subplot(Rs, Cs, i); 
+    imshow(A);
+    title(sprintf('z=%0.2fm', z(i)));
+end
+hold off;
+
+z = 0 : 3*f/(2*C) : 3*f;
+section = zeros(R, size(z, 2));
+for i = 1:1:size(z, 2)
+    U = propDOE(L, z(i), Lw, Lh, C, R, lambda);
+    U = fftshift(U);
+    section(:, i) = U(:, C/2);
+	if i == round(f/(3*f/(2*C)))
+        section(:, i) = ones(R, 1)*0.001;
+    end
+    
+end
+section(:, 1) = zeros(R, 1);
+CS = mat2gray(abs(section));
+figure,imshow(CS);
+colormap(pink);
+imwrite(CS, [getenv('UserProfile') '\Desktop\' 'AL.png']);
 
 % 需要在LCoS上显示 取消以下注释
 % MonitorID = 2;

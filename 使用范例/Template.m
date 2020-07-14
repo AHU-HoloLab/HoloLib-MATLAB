@@ -17,7 +17,7 @@ lambda_green = 532*nm; % 绿光激光器
 lambda_blue  = 473*nm; % 蓝光激光器
 lambda       = lambda_green;
 
-Unit_Size    = 6*um; % 单元物理尺寸
+Unit_Size    = 12*um; % 单元物理尺寸
 
 IMG_Name = 'lena.bmp'; % 输入图像
 IMG = imread(IMG_Name);

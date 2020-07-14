@@ -8,13 +8,13 @@ function res = repImage(data, width, height)
 %   M - 输出 Pw×Ph 分辨率图像
 %
 
-[R, C] = size(data);
+[R, C, D] = size(data);
 if R > height || C > width
     error('图片过大'); 
 end
 M = round(height / R) + 1;
 N = round(width / C) + 1;
 tmp = repmat(data, M, N);
-res = tmp(1:height, 1:width);
+res = tmp(1:height, 1:width, :);
 
 end

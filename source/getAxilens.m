@@ -1,5 +1,6 @@
 function res_angle = getAxilens(varargin)
 %轴锥透镜相位生成
+%适用于大焦比情况
 %   P = getAxilens(f, Zg, Lw, Lh, Pw, Ph，lambda) 生成轴锥透镜的相位分布
 %   P = getAxilens(f, Zg, WL, HL, WP, HP，lambda, R) 生成轴锥透镜的相位分布，增加透镜半径参数
 %
@@ -13,8 +14,6 @@ function res_angle = getAxilens(varargin)
 %   R - 轴锥体半径
 %
 %   P - 返回的相位分布矩阵
-%
-%   注意: 本函数仅适用于大焦比F#情况，当焦距与直径在同一数量级时无效
 %
 
 if nargin > 0
@@ -31,7 +30,7 @@ end
 phase_fenzi = (pi/lambda) * (distance_r .^2);
 phase_fenmu = f + (Zg / R^2) * (distance_r .^ 2);
 res_angle = -phase_fenzi ./ phase_fenmu;
-
+res_angle = mod(res_angle, 2*pi);
 end
 
 

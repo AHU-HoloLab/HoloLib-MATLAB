@@ -19,7 +19,7 @@ lambda       = lambda_green;
 
 Unit_Size    = 12*um; % 单元物理尺寸
 
-IMG_Name = 'lena.bmp'; % 输入图像
+IMG_Name = 'guang.bmp'; % 输入图像
 IMG = imread(IMG_Name);
 
 if length(size(IMG)) > 2 % 灰度化
@@ -29,7 +29,6 @@ end
 [R,C] = size(IMG);
 Lw = C*Unit_Size;
 Lh = R*Unit_Size;
-z  = 0.5*m;
 
 Niter = 60; % 迭代次数
 err = 1e-5; % 误差阈值
@@ -39,15 +38,15 @@ H = iterFourier(IMG, Niter);
 showPhase(H, '傅里叶纯相位全息图');
 
 
-f = 0.5*m;
-Zg = 0.05*m;
-AL = getAxilens(f, Zg, Lw, Lh, C, R, lambda);
+f = 0.9*m;
+Zg = 0.3*m;
+AL = getAxilensFR(f, Zg, Lw, Lh, C, R, lambda, 10*mm);
 L = getLens(f, Lw, Lh, C, R, lambda);
 showPhase(AL, '轴锥镜相位图');
 showPhase(L, '镜相位图');
 P = mod(H+AL, 2*pi);
 
-z = 0.3*m : 0.01*m : 0.7*m;
+z = f-0.2*m : 0.05*m : f+0.5*m;
 Cs = 8;
 Rs = round(size(z,2)/Cs)+1;
 for i = 1:1:size(z, 2)
@@ -55,9 +54,27 @@ for i = 1:1:size(z, 2)
     A = mat2gray(abs(U));
     subplot(Rs, Cs, i); 
     imshow(A);
-    title(sprintf('z=%0.2fm', z(i)));
+    title(sprintf('z=%0.3fm', z(i)));
 end
 hold off;
+
+z = 0 : 3*f/(2*C) : 3*f;
+section = zeros(R, size(z, 2)-1);
+for i = 2:1:size(z, 2)
+    U = propDOE(AL, z(i), Lw, Lh, C, R, lambda);
+    U = fftshift(U);
+    section(:, i) = U(:, C/2);
+%     if i == round(f/(3*f/(2*C)))
+%         section(:, i) = ones(R, 1)*0.1;
+%     end
+%     if i == round((f+Zg)/(3*f/(2*C)))
+%         section(:, i) = ones(R, 1)*0.1;
+%     end
+end
+
+CS = mat2gray(abs(section));
+figure,imshow(CS);
+imwrite(CS, [getenv('UserProfile') '\Desktop\' 'AL.png']);
 
 % showPhase(P, '轴锥镜全息图');
 % U = propDOE(P, z, Lw, Lh, C, R, lambda);
