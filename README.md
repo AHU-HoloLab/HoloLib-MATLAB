@@ -32,7 +32,7 @@ showLCOS.m              % 将相位图显示在LCoS上（仅支持MATLAB R2018b�
 showPhase.m             % 相位显示
 stepPhase.m             % 相位分阶函数
 writeFDTD.m             % FDTD Solutions 仿真文件数据导出
-getColorHologram.m		% 获取彩色全息图
+getColorHologram.m      % 获取彩色全息图
 ```
 `使用范例`  存放代码使用例子
 `image`    存放测试图像
