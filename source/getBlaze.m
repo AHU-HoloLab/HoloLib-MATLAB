@@ -38,12 +38,25 @@ switch ori
     otherwise,       x_axis =  0; y_axis =  0;
 end
 fi = zeros(Rows, Cols);
-for r=0:Rows-1
-    for c=0:Cols-1
-        fi(r+1,c+1)=(rem(x_axis*r+y_axis*c,T)+1)*2*pi/T ;%得到闪耀光栅的表达式
+for r = 1:Rows
+    for c = 1:Cols
+        Equ = (-abs(x_axis)) * r + (-abs(y_axis)) * c;
+        fi(r, c) = ( mod(Equ, T) );%得到闪耀光栅的表达式
     end
 end
-res_angle = mod(fi,2*pi);
+
+if x_axis == 1
+    fi = flipud(fi);
+end
+
+if y_axis == 1
+    fi = fliplr(fi);
+end
+
+fi = fi * 2*pi/T;
+fi = mod(fi,2*pi);
+res_angle = wrapTo2Pi(fi);
+% res_angle = fi;
 
 end
 
