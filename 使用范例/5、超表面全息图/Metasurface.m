@@ -9,7 +9,7 @@ nm = 1e-9;
 
 % 输入路径
 IMG_Path = '';
-IMG_Name = 'F16';
+IMG_Name = 'AHU';
 IMG_Type = '.BMP';
 
 % 输出路径
