@@ -27,7 +27,7 @@ if isempty(R)
     R = max(max(distance_r));
 end
 
-phi = - (2*pi/lambda) * distance_r * (R / sqrt(R.^2 + Zg.^2));
+phi = 2*pi - (2*pi/lambda) * distance_r * (R / sqrt(R.^2 + Zg.^2));
 res_angle = mod(phi, 2*pi);
 
 end
