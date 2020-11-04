@@ -1,5 +1,5 @@
-function res_angle = getAxilensFR(varargin)
-%轴锥透镜相位生成
+function res_angle = getAxilensII(varargin)
+%轴锥透镜相位生成 II型公式
 %适用于小焦比情况
 %   P = getAxilensFR(f, Zg, Lw, Lh, Pw, Ph，lambda) 生成轴锥透镜的相位分布
 %   P = getAxilensFR(f, Zg, WL, HL, WP, HP，lambda, R) 生成轴锥透镜的相位分布，增加透镜半径参数

@@ -1,8 +1,8 @@
-function res_angle = getAxilensFR(varargin)
-%轴锥透镜相位生成
-%适用于小焦比情况
-%   P = getAxilensFR(f, Zg, Lw, Lh, Pw, Ph，lambda) 生成轴锥透镜的相位分布
-%   P = getAxilensFR(f, Zg, WL, HL, WP, HP，lambda, R) 生成轴锥透镜的相位分布，增加透镜半径参数
+function res_angle = getAxilensI(varargin)
+%轴锥透镜相位生成 I型公式
+%适用于大焦比情况
+%   P = getAxilens(f, Zg, Lw, Lh, Pw, Ph，lambda) 生成轴锥透镜的相位分布
+%   P = getAxilens(f, Zg, WL, HL, WP, HP，lambda, R) 生成轴锥透镜的相位分布，增加透镜半径参数
 %
 %   f - f 和 Zg 标定了轴锥体的焦距的范围，在 f0到 f0+Zg之间
 %   Zg - 焦深，单位：米
@@ -27,11 +27,10 @@ distance_r = sqrt(X.^2 + Y.^2);
 if isempty(R)
     R = max(max(distance_r));
 end
-
-fr = f + (Zg/R)*distance_r;
-phase = -(2*pi/lambda)*(sqrt(fr.^2 + distance_r.^2) - fr);
-res_angle = mod(phase, 2*pi);
-
+phase_fenzi = (pi/lambda) * (distance_r .^2);
+phase_fenmu = f + (Zg / R^2) * (distance_r .^ 2);
+res_angle = -phase_fenzi ./ phase_fenmu;
+res_angle = mod(res_angle, 2*pi);
 end
 
 
