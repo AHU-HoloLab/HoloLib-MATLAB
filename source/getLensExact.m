@@ -18,6 +18,6 @@ h = linspace(-height_Length/2, height_Length/2, height_Pixel);
 [X, Y] = meshgrid(w, h);
 phi = - k * (sqrt(X.^2 + Y.^2 + f.^2) - f); % 为什么是负值: 提前要倒退的距离(相位延迟)
 C = exp(1j*phi);
-res_angle = mod(phi, 2*pi);
+res_angle = mod(angle(C), 2*pi);
 
 end
