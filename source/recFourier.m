@@ -20,7 +20,8 @@ end
 [data, show_flag, title] = parse_inputs(varargin{:});
 
 data = mod(data, 2*pi);
-I = ifft2(exp(1j .* data));
+I = fft2(exp(1j .* data));
+I = fftshift(I);
 A = mat2gray(abs(I));
 if show_flag
     figure('name', title, 'NumberTitle','off');

@@ -38,8 +38,7 @@ for n = 1 : 1 : n_iter
     if (rmse <= err)
             break;
     end
-    I1 = I .* exp(1j .* angle(I2));
-    
+     I1 = fftshift(I) .* exp(1j .* angle(I2));
     value = n/n_iter;
     waitbar(n/n_iter, handle, sprintf('%0.0f %%', value*100));
 end
