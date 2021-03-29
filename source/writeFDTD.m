@@ -27,7 +27,7 @@ for r = R:-1:1
 end
 fclose(fid);
 % 将数据移动到指定位
-movefile([getenv('TMP') '\' tmpName '.tmp'], [FILENAME]); 
+movefile([getenv('TMP') '\' tmpName '.tmp'], FILENAME); 
 
 end
 

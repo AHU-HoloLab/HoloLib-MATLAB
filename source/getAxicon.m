@@ -58,7 +58,7 @@ if (nargin == 7)
     width_Pixel = varargin{4};
     height_Pixel = varargin{5};
     lambda = varargin{6};
-    R = varargin{6};
+    R = varargin{7};
 end
 
 end
